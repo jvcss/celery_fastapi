@@ -7,15 +7,15 @@ case "$1" in
       --host 0.0.0.0 --port 8000 --workers 2
     ;;
   worker)
-    exec celery -A app.celery.celery_app worker \
+    exec celery -A app.celery.app:celery_app worker \
       --loglevel=info --concurrency=2
     ;;
   beat)
-    exec celery -A app.celery.celery_app beat \
+    exec celery -A app.celery.app:celery_app beat \
       --loglevel=info
     ;;
   flower)
-    exec celery -A app.celery.celery_app flower \
+    exec celery -A app.celery.app:celery_app flower \
       --port=5555 --loglevel=info
     ;;
   *)
