@@ -1,0 +1,62 @@
+services:
+  api:
+    build: .
+    container_name: api
+    command: ["api"]
+    ports:
+      - "8001:8000"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    container_name: celery_worker
+    command: ["worker"]
+    depends_on:
+      - redis
+
+  beat:
+    build: .
+    container_name: celery_beat
+    command: ["beat"]
+    depends_on:
+      - redis
+
+  flower:
+    build: .
+    container_name: celery_flower
+    command: ["flower"]
+    ports:
+      - "5556:5555"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+# services:
+#   web:
+#     build: .
+#     container_name: web
+#     ports:
+#       - 8001:8000
+#       - 5556:5555
+#     volumes:
+#       - .:/app
+#     depends_on:
+#       - celerybackend
+
+#   celerybackend:
+#     container_name: celerybackend
+#     image: redis:latest
+#     ports:
+#       - 6379:6379
+#     healthcheck:
+#       test: [ "CMD", "redis-cli", "ping" ]
+#       interval: 5s
+#       timeout: 30s
+#       retries: 50
+#     restart: always
