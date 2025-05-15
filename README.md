@@ -12,20 +12,20 @@ Você verá:
 ## 🎯 Arquitetura
 ```mermaid
 flowchart LR
-    Redis[(Redis)]
+    Redis[Redis]
     subgraph Celery
       W[Worker]
       B[Beat]
       F[Flower]
     end
     subgraph FastAPI
-      API[app.main:app]
+      API[app main app]
     end
 
-    API -- broker/result → Redis
-    W -- broker/result → Redis
-    B -- broker/result → Redis
-    F -- broker/result → Redis
+    API -->|broker/result| Redis
+    W -->|broker/result| Redis
+    B -->|broker/result| Redis
+    F -->|broker/result| Redis
 ```
 
 ## 📂 Estrutura de Diretórios
