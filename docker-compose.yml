@@ -6,21 +6,21 @@ services:
     ports:
       - "8001:8000"
     depends_on:
-      - redis
+      - redis_app
 
   worker:
     build: .
     container_name: celery_worker
     command: [ "worker" ]
     depends_on:
-      - redis
+      - redis_app
 
   beat:
     build: .
     container_name: celery_beat
     command: [ "beat" ]
     depends_on:
-      - redis
+      - redis_app
 
   flower:
     build: .
@@ -29,10 +29,10 @@ services:
     ports:
       - "5556:5555"
     depends_on:
-      - redis
+      - redis_app
 
-  redis:
+  redis_app:
     image: redis:7
-    container_name: redis
+    container_name: redis-app
     ports:
       - "6380:6379"
